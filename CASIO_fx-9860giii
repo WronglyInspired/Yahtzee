@@ -21,10 +21,15 @@ Ways to score:
 
 
 Restrictions: 7 lines of 21 characters
-123456789012345678901
-
-+123456 sum:034
--34FSLC Y
+---------------------
+==YAHTZEE=====Scr:104|
++ 123456=043 prev:034|
+- 34FSLC Y=          |
+{bst:F:25}   {JOKER} |
+[6] [6] [6] [6] [6]  |
+ <spcfy err>   roll:1|
+Hld or Scr: 10001    |
+---------------------
 
 Upper Row: (can also have a '+' in front of number)
 1 1s

@@ -1,5 +1,5 @@
 # Yahtzee logic by WronglyInspired
-# to add: Yahtzee Bonus, Upper Row Bonus, 
+# to add: Yahtzee Bonus, Upper Row Bonus,
 roll = [4, 4, 4, 4, 4]
 ctgy="y".lower()
 #ctgy = input("Category: ").lower()

@@ -18,11 +18,17 @@ roll = [2, 3, 1, 4, 2]
 # print(set(roll))
 # print(len(set(roll)))
 
-s = roll.count(1)and roll.count(2)and roll.count(3)and roll.count(4) or\
-    roll.count(2)and roll.count(3)and roll.count(4)and roll.count(5) or\
-    roll.count(3)and roll.count(4)and roll.count(5)and roll.count(6)
-print(s)
-l = roll.count(1)and roll.count(2)and roll.count(3)and roll.count(4)and roll.count(5) or\
-    roll.count(2)and roll.count(3)and roll.count(4)and roll.count(5)and roll.count(6)
-print(l)
-
+# s = roll.count(1)and roll.count(2)and roll.count(3)and roll.count(4) or\
+#     roll.count(2)and roll.count(3)and roll.count(4)and roll.count(5) or\
+#     roll.count(3)and roll.count(4)and roll.count(5)and roll.count(6)
+# print(s)
+# l = roll.count(1)and roll.count(2)and roll.count(3)and roll.count(4)and roll.count(5) or\
+#     roll.count(2)and roll.count(3)and roll.count(4)and roll.count(5)and roll.count(6)
+# print(l)
+#
+yahtzee = None
+sum = 0
+if yahtzee!=None:
+    print("Filled")
+else:
+    print("None")
