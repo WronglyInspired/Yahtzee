@@ -1,4 +1,5 @@
 # Yahtzee logic by WronglyInspired
+# to add: Yahtzee Bonus, Upper Row Bonus, 
 roll = [4, 4, 4, 4, 4]
 ctgy="y".lower()
 #ctgy = input("Category: ").lower()
@@ -28,5 +29,9 @@ def scrCtgy(ctgy,roll):
     else: scr=0
     return scr
 
+#upr = 0 # upper row sum
+
 # print(findKind(3,roll))
 print(scrCtgy(ctgy,roll))
+
+
