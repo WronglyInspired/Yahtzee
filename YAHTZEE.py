@@ -1,3 +1,4 @@
+# Yahtzee logic by WronglyInspired
 roll = [4, 4, 4, 4, 4]
 ctgy="y".lower()
 #ctgy = input("Category: ").lower()
