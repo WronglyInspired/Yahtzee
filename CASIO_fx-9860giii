@@ -1,0 +1,43 @@
+Welcome Screen
+Optional Instructions
+Enter to play
+13 rounds:
+    Roll
+    Hold and Roll or Score
+    Hold and Roll or Score
+    Score
+    Set round score as 'prevscore'
+    Set total score
+Calculate Upper Row bonus
+
+
+Ways to score:
+    Upper row
+        1s, 2s, 3s, 4s, 5s, 6s
+        bonus+35 if Upper row sum >= 63
+    Lower row
+        3kind, 4kind, fullhouse, sml, lrg, chance, yahtzee
+        2nd, 3rd, and 4th yahtzees worth 100 (50, 150, 250, 350)
+
+
+Restrictions: 7 lines of 21 characters
+123456789012345678901
+
++123456 sum:034
+-34FSLC Y
+
+Upper Row: (can also have a '+' in front of number)
+1 1s
+2 2s
+3 3s
+4 4s
+5 5s
+6 6s
+Lower Row: (can also have a '-' in front of character)
+3 3 of a kind
+4 4 of a kind
+F Full House
+S Small Straight
+L Large Straight
+C Chance
+Y Yahtzee
