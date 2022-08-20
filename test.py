@@ -26,9 +26,26 @@ roll = [2, 3, 1, 4, 2]
 #     roll.count(2)and roll.count(3)and roll.count(4)and roll.count(5)and roll.count(6)
 # print(l)
 #
-yahtzee = None
-sum = 0
-if yahtzee!=None:
+
+
+scores={
+    "1": None,
+    "2": None,
+    "+3": None,
+    "+4": None,
+    "5": None,
+    "6": None,
+    "-3": None,
+    "-4": None,
+    "f": None,
+    "s": None,
+    "l": None,
+    "c": None,
+    "y": None
+}
+print(scores["1"])
+
+if scores["y"]!=None:
     print("Filled")
 else:
     print("None")
