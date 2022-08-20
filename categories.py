@@ -29,6 +29,7 @@ ctgys={ # ctgys is shorthand for categories
     "c": {"value": None, "rule": True},
     "y": {"value": None, "rule": True},  # how to check this rule?
 }
+
 ctgysKeys = list(ctgys.keys())  # converts keys of dictionaries into plan list
 print("t" in ctgysKeys)  # can then check to see if something is in that list
 
