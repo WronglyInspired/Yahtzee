@@ -78,3 +78,5 @@ print(ctgys["l"]["rule"])
 #     print("Filled")
 # else:
 #     print("None")
+
+input(">>> ")
