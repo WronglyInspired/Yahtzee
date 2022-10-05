@@ -33,7 +33,7 @@ ctgys={ # ctgys is shorthand for categories
     "s": {"value": None, "rule": findStraight(4, roll), "pts": 30},
     "l": {"value": None, "rule": findStraight(5, roll), "pts": 40},
     "c": {"value": None, "rule": True, "pts": sum(roll)},
-    "y": {"value": None, "rule": True},  # how to check this rule?
+    "y": {"value": None, "rule": len(set(roll))==1, "pts": 50},  # how to check this rule?
 }
 input = "t"
 

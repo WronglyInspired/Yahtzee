@@ -1,6 +1,6 @@
 # code that asks and evaluates player input
 # test and example code for things related to categories
-roll = [5, 1, 1, 3, 1] # example roll
+roll = [5, 5, 5, 5, 5]  # example roll
 
 ##########################################################################################
 def findKind(num, roll, relate=">="):
@@ -27,7 +27,7 @@ ctgys={ # ctgys is shorthand for categories
     "2": {"value": None, "rule": True, "pts": roll.count(2) * 2},
     "3": {"value": None, "rule": True, "pts": roll.count(3) * 3},
     "4": {"value": None, "rule": True, "pts": roll.count(4) * 4},
-    "5": {"value": None, "rule": True, "pts": roll.count(5) * 5},
+    "5": {"value": 5, "rule": True, "pts": roll.count(5) * 5},
     "6": {"value": None, "rule": True, "pts": roll.count(6) * 6},
     "t": {"value": None, "rule": findKind(3, roll), "pts": sum(roll)},
     "q": {"value": None, "rule": findKind(4, roll), "pts": sum(roll)},
@@ -35,14 +35,14 @@ ctgys={ # ctgys is shorthand for categories
     "s": {"value": None, "rule": findStraight(4, roll), "pts": 30},
     "l": {"value": None, "rule": findStraight(5, roll), "pts": 40},
     "c": {"value": None, "rule": True, "pts": sum(roll)},
-    "y": {"value": None, "rule": True},  # how to check this rule?
+    "y": {"value": 50, "rule": len(set(roll))==1, "pts": 50},  # how to check this rule?
 }
 ans = "t"
 
-ctgysKeys = list(ctgys.keys())  # converts keys of dictionaries into plan list
-print(ans in ctgysKeys)  # can then check to see if something is in that list
-print(ctgys[ans]["rule"])
-print(ctgys[ans]["pts"])
+# ctgysKeys = list(ctgys.keys())  # converts keys of dictionaries into plan list
+# print(ans in ctgysKeys)  # can then check to see if something is in that list
+# print(ctgys[ans]["rule"])
+# print(ctgys[ans]["pts"])
 
 #######################################################################
 
@@ -56,7 +56,7 @@ def askPlayer(rollNum, prompt=""):
             return ans  # return string for hold
         elif len(ans)==1:  # ctgy
             if ans in list(ctgys.keys()):  # if ctgy exists
-                print("ctgy exists")
+                entrScr(roll, ans, rollNum)
             else:
                 askPlayer(rollNum, "<ctgy err>")
         else:
@@ -68,15 +68,25 @@ def askPlayer(rollNum, prompt=""):
         elif ans not in list(ctgys.keys()):
             askPlayer(rollNum, "<ctgy err>")
         else:
-            print("ctgy exists")
+            entrScr(roll, ans, rollNum)
 
-def entrScr(roll, ctgy):
-    if len(set(roll))==1:  # if yahtzee
-        if ctgy=="y":  # if player entered into yahtzee category
 
-        elif ctgys["y"]!=None:  # if yahtzee filled
-            joker=True
-        elif ctgy!="y":  # if
+def entrScr(roll, ctgy, rollNum):
+    if ctgys[ctgy]["rule"] and ctgys[ctgy]["value"] is None:  # scoring is valid and ctgy is unfilled
+        ctgys[ctgy]["value"]=ctgys[ctgy]["pts"]
 
+    elif not ctgys[ctgy]["rule"] and ctgys[ctgy]["value"] is not None:  # scoring is invalid
+        ctgys[ctgy]["value"]=0
+
+    elif len(set(roll))==1:  # it's a yahtzee and person hasn't chosen yahtzee
+
+        if ctgys["y"]["value"] is None: askPlayer(rollNum, "<ytze err>")  # if y ctgy is unfld, you have to choose to fill it
+
+        elif ctgys["y"]["value"]<350:  # if yahtzee ctgy is filled and less than 3 bonuses have been added
+
+            if ctgy!= roll[0] and ctgys[str(roll[0])]["value"] is None:  # if plyr hasn't chsn corr. upr row ctgy when its
+                # unfild
+                askPlayer(rollNum, "<ytze err>")
+    else: askPlayer(rollNum, "err")
 
 askPlayer(2)

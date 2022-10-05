@@ -1,0 +1,13 @@
+Once the player chooses to score, and we know the category exists, and is empty
+
+If dice fulfill category rule:
+    give correct number of points in that category
+
+If dice don't fulfill category rule:
+    give 0 points in that category
+
+If you roll a yahtzee, then you have to score in the yahtzee category
+
+If the yahtzee category already has a score, make it 'joker'
+    If the yahtzee category has a score less than (max_bonus - 100)=250, add 100 to yahtzee category as bonus
+
