@@ -20,25 +20,34 @@ def findStraight(size, roll):  # finds small (4) or large (5) straights from a r
         print("<err finding straight>")  # error/bug prevention
         return False
 
+
+def categoryValid(input):
+    ctgysKeys = list(ctgys.keys())  # converts keys of dictionaries into plan list
+    if input in ctgysKeys:  # can then check to see if something is in that list
+        if ctgys[input]["value"] is None:
+            return True
+    return False
+
 ctgys={ # ctgys is shorthand for categories
-    "1": {"value": None, "rule": True, "pts": roll.count(1) * 1},
-    "2": {"value": None, "rule": True, "pts": roll.count(2) * 2},
-    "3": {"value": None, "rule": True, "pts": roll.count(3) * 3},
-    "4": {"value": None, "rule": True, "pts": roll.count(4) * 4},
-    "5": {"value": None, "rule": True, "pts": roll.count(5) * 5},
-    "6": {"value": None, "rule": True, "pts": roll.count(6) * 6},
-    "t": {"value": None, "rule": findKind(3, roll), "pts": sum(roll)},  # triples / three of a kind
-    "q": {"value": None, "rule": findKind(4, roll), "pts": sum(roll)},  # quadruples / four of a kind
-    "f": {"value": None, "rule": findKind(2, roll, "==") and findKind(3, roll), "pts": 25},  # full house
-    "s": {"value": None, "rule": findStraight(4, roll), "pts": 30},  # small straight
-    "l": {"value": None, "rule": findStraight(5, roll), "pts": 40},  # large straight
-    "c": {"value": None, "rule": True, "pts": sum(roll)},  # chance
-    "y": {"value": None, "rule": True},  # how to check this rule?
+    "1": {"value": None, "row": "upper", "rule": True, "pts": roll.count(1) * 1},
+    "2": {"value": None, "row": "upper", "rule": True, "pts": roll.count(2) * 2},
+    "3": {"value": None, "row": "upper", "rule": True, "pts": roll.count(3) * 3},
+    "4": {"value": None, "row": "upper", "rule": True, "pts": roll.count(4) * 4},
+    "5": {"value": None, "row": "upper", "rule": True, "pts": roll.count(5) * 5},
+    "6": {"value": None, "row": "upper", "rule": True, "pts": roll.count(6) * 6},
+    "t": {"value": None, "row": "lower", "rule": findKind(3, roll), "pts": sum(roll)},  # triples / three of a kind
+    "q": {"value": None, "row": "lower", "rule": findKind(4, roll), "pts": sum(roll)},  # quadruples / four of a kind
+    "f": {"value": None, "row": "lower", "rule": findKind(2, roll, "==") and findKind(3, roll), "pts": 25},  # full house
+    "s": {"value": None, "row": "lower", "rule": findStraight(4, roll), "pts": 30},  # small straight
+    "l": {"value": None, "row": "lower", "rule": findStraight(5, roll), "pts": 40},  # large straight
+    "c": {"value": None, "row": "lower", "rule": True, "pts": sum(roll)},  # chance
+    "y": {"value": None, "row": "lower", "rule": True},  # how to check this rule?
 }
 input = "3"
 
-ctgysKeys = list(ctgys.keys())  # converts keys of dictionaries into plan list
-print(input in ctgysKeys)  # can then check to see if something is in that list
+
 print(ctgys[input]["rule"])
 print(ctgys[input]["pts"])
+
+print(categoryValid("6"))
 

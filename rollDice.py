@@ -1,6 +1,6 @@
 # roll dice
 from random import *
-roll=[0,0,0,0,0]
+dice=[0, 0, 0, 0, 0]
 
 
 def rollDice(roll, hold):
@@ -11,12 +11,12 @@ def rollDice(roll, hold):
         i+=1
     return roll
 
-print(roll)
-roll = rollDice(roll, "00000")
-print(roll)
+print(dice)
+dice = rollDice(dice, "00000")
+print(dice)
 rollNum=1
 while rollNum<3:
     hold=input("hold: ")
-    roll = rollDice(roll, hold)
-    print(roll)
+    dice = rollDice(dice, hold)
+    print(dice)
     rollNum+=1
