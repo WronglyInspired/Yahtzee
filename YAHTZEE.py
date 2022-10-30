@@ -40,9 +40,10 @@ def categoryValid(input):
 
 def awardPts(ctgy, joker=False):
     if ctgys[ctgy]["rule"] or joker:
-        print(ctgys[ctgy]["pts"])
+        x = ctgys[ctgy]["pts"]
+        print("you get", x)
     else:
-        print(0)
+        print("nothing, you get", 0)
 
 
 def rollDice(roll, hold):
@@ -77,7 +78,7 @@ def playRound(roll):
 
 def scoreCategory():
     player = None
-    # score category
+
     print(categoryValid(player))
     while not categoryValid(player):
         player = input("Score: ")
@@ -95,14 +96,14 @@ def scoreCategory():
                     if player == str(playerDice[0]):  # and player has chosen it, alg
                         print("award points")
                     else:
-                        print(
-                            "error--must select corresponding upper section box")  # otherwise throw error (which is nicer than giving them 0)
+                        print("error--must select corresponding upper section box")  # otherwise throw error (which is nicer than giving them 0)
                 else:  # player can score in any box and rule = True
                     awardPts(player, True)
                     print(f"{ctgys[player]['value']} points awarded to {player}")
 
             else:
                 print("Normal scoring")
+                print(ctgys[player]["pts"])
                 awardPts(player)
                 print(f"{ctgys[player]['value']} points awarded to {player}")
         else:

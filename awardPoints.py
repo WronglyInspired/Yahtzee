@@ -1,4 +1,5 @@
 playerDice = [0, 0, 0, 0, 0]
+playerDice = [2, 2, 3, 3, 3]
 
 
 def findKind(num, roll, relate=">="):  # finds how many of a number in dice roll
@@ -21,7 +22,7 @@ def findStraight(size, roll):  # finds small (4) or large (5) straights from a r
         return False
 
 
-def awardPoints(roll, ctgy, joker=False):
+def awardPoints(ctgy, joker=False):
     # if the dice match the chosen category, or is joker, then return the correct number of points
     if ctgys[ctgy]["rule"] or joker:
         print("points to earn", ctgys[ctgy]["pts"])
@@ -32,8 +33,8 @@ def awardPoints(roll, ctgy, joker=False):
 
 
 ctgys = {  # ctgys is shorthand for categories
-    "1": {"value": None, "row": "upper", "rule": True, "pts": dice.count(1) * 1},
-    "2": {"value": None, "row": "upper", "rule": True, "pts": dice.count(2) * 2},
+    "1": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(1) * 1},
+    "2": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(2) * 2},
     "3": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(3) * 3},
     "4": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(4) * 4},
     "5": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(5) * 5},
@@ -49,9 +50,10 @@ ctgys = {  # ctgys is shorthand for categories
 }
 
 
-def playRound(dice):
-    dice = [2, 2, 3, 3, 3]
-    awardPoints(dice, "2")
+def scorePoints(ctgy):
+    awardPoints(ctgy)
 
 
-playRound(playerDice)
+def asdf(ctgy):
+    scorePoints(ctgy)
+asdf("2")
