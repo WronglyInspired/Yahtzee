@@ -1,5 +1,8 @@
 # Yahtzee wip by WronglyInspired
-roll = [3, 1, 3, 1, 1]  # example roll
+from random import *
+
+playerDice = [0, 0, 0, 0, 0]
+# roll = [3, 1, 3, 1, 1]  # example roll
 
 def findKind(num, roll, relate=">="):  # finds how many of a number in dice roll
     for i in range(1, 7):
@@ -12,9 +15,9 @@ def findKind(num, roll, relate=">="):  # finds how many of a number in dice roll
 
 def findStraight(size, roll):  # finds small (4) or large (5) straights from a roll
     rollStr = str(set(roll)).strip("{}").replace(", ", "")  # code that converts a list to a set to a string.
-    if size==4:
+    if size == 4:
         return "1234" in rollStr or "2345" in rollStr or "3456" in rollStr
-    elif size==5:
+    elif size == 5:
         return "12345" in rollStr or "23456" in rollStr
     else:
         print("<err finding straight>")  # error/bug prevention
@@ -33,6 +36,7 @@ def categoryValid(input):
         return True
     return False
 
+
 # def scrCtgy(ctgy, roll, rule=None):  # if rule is not set to True, we will assume there is no joker
 
 
@@ -43,54 +47,94 @@ def awardPts(roll, ctgy, joker=False):
         return 0
 
 
+def rollDice(roll, hold):
+    i = 0
+    for x in hold:
+        if x == "0":
+            roll[i] = randint(1, 6)
+        i += 1
+    return roll
 
-ctgys={ # ctgys is shorthand for categories
-    "1": {"value": None, "row": "upper", "rule": True, "pts": roll.count(1) * 1},
-    "2": {"value": None, "row": "upper", "rule": True, "pts": roll.count(2) * 2},
-    "3": {"value": None, "row": "upper", "rule": True, "pts": roll.count(3) * 3},
-    "4": {"value": None, "row": "upper", "rule": True, "pts": roll.count(4) * 4},
-    "5": {"value": None, "row": "upper", "rule": True, "pts": roll.count(5) * 5},
-    "6": {"value": None, "row": "upper", "rule": True, "pts": roll.count(6) * 6},
-    "t": {"value": None, "row": "lower", "rule": findKind(3, roll), "pts": sum(roll)},  # triples / three of a kind
-    "q": {"value": None, "row": "lower", "rule": findKind(4, roll), "pts": sum(roll)},  # quadruples / four of a kind
-    "f": {"value": None, "row": "lower", "rule": findKind(2, roll, "==") and findKind(3, roll), "pts": 25},  # full house
-    "s": {"value": None, "row": "lower", "rule": findStraight(4, roll), "pts": 30},  # small straight
-    "l": {"value": None, "row": "lower", "rule": findStraight(5, roll), "pts": 40},  # large straight
-    "c": {"value": None, "row": "lower", "rule": True, "pts": sum(roll)},  # chance
-    "y": {"value": 50, "row": "lower", "rule": findKind(5, roll), "pts": 50},  # how to check this rule?
+
+def playRound(roll):
+    # initial roll
+    input("Enter to Roll new round: ")
+    roll = rollDice(roll, "00000")
+    print(roll)
+    rollNum = 1
+
+    while 1 <= rollNum <= 2:
+        player = input("Hold & Reroll OR Score")
+        if len(player) == 1:  # if to score
+            rollNum = 3
+        elif len(player) == 5:  # if to hold
+            roll = rollDice(roll, player)
+            print(roll)
+            rollNum += 1
+        else:
+            print("error invalid input")
+
+    # score category
+    print(categoryValid(player))
+    while not categoryValid(player):
+        player = input("Score: ")
+        if categoryValid(player):
+            if ctgys["y"]["rule"] and ctgys["y"]["value"] is not None:  # if the Yahtzee becomes a Joker
+                print("Joker Time")
+
+                # yahtzee bonus
+                if 0 < ctgys["y"]["value"] <= 250:
+                    ctgys["y"]["value"] += 100
+                    print("Yahtzee Bonus")
+
+                # joker (Free choice Joker rule)
+                if ctgys[str(roll[0])]["value"] is None:  # if the corresponding upper section box is empty
+                    if player == str(roll[0]):  # and player has chosen it, alg
+                        print("award points")
+                    else:
+                        print(
+                            "error--must select corresponding upper section box")  # otherwise throw error (which is nicer than giving them 0)
+                else:  # player can score in any box and rule = True
+                    ctgys[player]["value"] = awardPts(roll, player, True)
+                    print(f"{ctgys[player]['value']} points awarded to {player}")
+
+
+            else:
+                print("Normal scoring")
+                if ctgys[player]["rule"]:
+                    ctgys[player]["value"] = awardPts(roll, player, True)
+                else:
+                    ctgys[player]["value"] = 0
+                print(f"{ctgys[player]['value']} points awarded to {player}")
+        else:
+            print("ctgy err")
+
+
+ctgys = {  # ctgys is shorthand for categories
+    "1": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(1) * 1},
+    "2": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(2) * 2},
+    "3": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(3) * 3},
+    "4": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(4) * 4},
+    "5": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(5) * 5},
+    "6": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(6) * 6},
+    "t": {"value": None, "row": "lower", "rule": findKind(3, playerDice), "pts": sum(playerDice)},  # triples / three of a kind
+    "q": {"value": None, "row": "lower", "rule": findKind(4, playerDice), "pts": sum(playerDice)},  # quadruples / four of a kind
+    "f": {"value": None, "row": "lower", "rule": findKind(2, playerDice, "==") and findKind(3, playerDice), "pts": 25},
+    # full house
+    "s": {"value": None, "row": "lower", "rule": findStraight(4, playerDice), "pts": 30},  # small straight
+    "l": {"value": None, "row": "lower", "rule": findStraight(5, playerDice), "pts": 40},  # large straight
+    "c": {"value": None, "row": "lower", "rule": True, "pts": sum(playerDice)},  # chance
+    "y": {"value": 50, "row": "lower", "rule": findKind(5, playerDice), "pts": 50},  # how to check this rule?
 }
-player = "f"
-
 
 # print(ctgys[input]["rule"])
 # print(ctgys[input]["pts"])
 #
 # print(categoryValid("y"))
 
-if categoryValid(player):
-    if ctgys["y"]["rule"] and ctgys["y"]["value"] is not None:  # if the Yahtzee becomes a Joker
-        print("Joker Time")
 
-        # yahtzee bonus
-        if 0 < ctgys["y"]["value"] <= 250:
-            ctgys["y"]["value"] += 100
-            print("Yahtzee Bonus")
-
-        # joker (Free choice Joker rule)
-        if ctgys[str(roll[0])]["value"] is None:  # if the corresponding upper section box is empty
-            if player == str(roll[0]):  # and player has chosen it, alg
-                print("award points")
-            else:
-                print("error--must select corresponding upper section box")  # otherwise throw error (which is nicer than giving them 0)
-        else:  # player can score in any box and rule = True
-            ctgys[player]["value"] = awardPts(roll, player, True)
-            print(f"{ctgys[player]['value']} points awarded to {player}")
-
-
-    else:
-        print("Normal scoring")
-        ctgys[player]["value"] = awardPts(roll, player, True)
-        print(f"{ctgys[player]['value']} points awarded to {player}")
-else:
-    print("ctgy err")
-
+turn = 0
+while turn < 13:
+    playerDice = [0, 0, 0, 0, 0]
+    playRound(playerDice)
+    turn += 1
