@@ -38,12 +38,11 @@ def categoryValid(input):
     return False
 
 
-def awardPts(roll, ctgy, joker=False):
+def awardPts(ctgy, joker=False):
     if ctgys[ctgy]["rule"] or joker:
-        print("points to earn", ctgys[ctgy]["pts"])
-        return ctgys[ctgy]["pts"]
+        print(ctgys[ctgy]["pts"])
     else:
-        return 0
+        print(0)
 
 
 def rollDice(roll, hold):
@@ -73,6 +72,11 @@ def playRound(roll):
         else:
             print("error invalid input")
 
+    return roll
+
+
+def scoreCategory():
+    player = None
     # score category
     print(categoryValid(player))
     while not categoryValid(player):
@@ -87,20 +91,19 @@ def playRound(roll):
                     print("Yahtzee Bonus")
 
                 # joker (Free choice Joker rule)
-                if ctgys[str(roll[0])]["value"] is None:  # if the corresponding upper section box is empty
-                    if player == str(roll[0]):  # and player has chosen it, alg
+                if ctgys[str(playerDice[0])]["value"] is None:  # if the corresponding upper section box is empty
+                    if player == str(playerDice[0]):  # and player has chosen it, alg
                         print("award points")
                     else:
                         print(
                             "error--must select corresponding upper section box")  # otherwise throw error (which is nicer than giving them 0)
                 else:  # player can score in any box and rule = True
-                    ctgys[player]["value"] = awardPts(roll, player, True)
+                    awardPts(player, True)
                     print(f"{ctgys[player]['value']} points awarded to {player}")
-
 
             else:
                 print("Normal scoring")
-                ctgys[player]["value"] = awardPts(roll, player)
+                awardPts(player)
                 print(f"{ctgys[player]['value']} points awarded to {player}")
         else:
             print("ctgy err")
@@ -132,5 +135,6 @@ ctgys = {  # ctgys is shorthand for categories
 turn = 0
 while turn < 13:
     playerDice = [0, 0, 0, 0, 0]
-    playRound(playerDice)
+    playerDice = playRound(playerDice)
+    scoreCategory()
     turn += 1
