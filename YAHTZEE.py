@@ -32,13 +32,14 @@ def findStraight(size, roll):  # finds small (4) or large (5) straights from a r
 #             return True
 #     return False
 
-def categoryValid(input):
-    if ctgys.get(input) is not None and ctgys[input]["value"] is None:
+def categoryValid(ctgy, ctgys):
+    if ctgys.get(ctgy) is not None and ctgys[ctgy]["value"] is None:
         return True
     return False
 
 
-def awardPts(ctgy, joker=False):
+def awardPts(ctgy, ctgys, joker=False):
+    print("awardPts()", ctgys)
     if ctgys[ctgy]["rule"] or joker:
         x = ctgys[ctgy]["pts"]
         print("you get", x)
@@ -76,13 +77,12 @@ def playRound(roll):
     return roll
 
 
-def scoreCategory():
+def scoreCategory(ctgys):
+    print("scoreCategory()", ctgys)
     player = None
-
-    print(categoryValid(player))
-    while not categoryValid(player):
+    while not categoryValid(player, ctgys):
         player = input("Score: ")
-        if categoryValid(player):
+        if categoryValid(player, ctgys):
             if ctgys["y"]["rule"] and ctgys["y"]["value"] is not None:  # if the Yahtzee becomes a Joker
                 print("Joker Time")
 
@@ -98,19 +98,21 @@ def scoreCategory():
                     else:
                         print("error--must select corresponding upper section box")  # otherwise throw error (which is nicer than giving them 0)
                 else:  # player can score in any box and rule = True
-                    awardPts(player, True)
+                    awardPts(player, ctgys, True)
                     print(f"{ctgys[player]['value']} points awarded to {player}")
 
             else:
                 print("Normal scoring")
                 print(ctgys[player]["pts"])
-                awardPts(player)
+                awardPts(player, ctgys)
                 print(f"{ctgys[player]['value']} points awarded to {player}")
         else:
             print("ctgy err")
+    print("returning scoreCategory()", ctgys)
+    return ctgys
 
 
-ctgys = {  # ctgys is shorthand for categories
+playerCtgys = {  # ctgys is shorthand for categories
     "1": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(1) * 1},
     "2": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(2) * 2},
     "3": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(3) * 3},
@@ -127,15 +129,12 @@ ctgys = {  # ctgys is shorthand for categories
     "y": {"value": 50, "row": "lower", "rule": findKind(5, playerDice), "pts": 50},  # how to check this rule?
 }
 
-# print(ctgys[input]["rule"])
-# print(ctgys[input]["pts"])
-#
-# print(categoryValid("y"))
-
-
+# !!the problem is that the pts part of ctgys is evaluating straight away, until waiting until dice has been rolled for evaluating
 turn = 0
 while turn < 13:
     playerDice = [0, 0, 0, 0, 0]
     playerDice = playRound(playerDice)
-    scoreCategory()
+    print("pCategories before", playerCtgys)
+    playerCtgys = scoreCategory(playerCtgys)
+    print("pCategories after", playerCtgys)
     turn += 1

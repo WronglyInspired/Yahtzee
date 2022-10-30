@@ -1,3 +1,4 @@
+# Yahtzee wip by WronglyInspired
 playerDice = [0, 0, 0, 0, 0]
 
 
@@ -21,28 +22,32 @@ def findStraight(size, roll):  # finds small (4) or large (5) straights from a r
         return False
 
 
-def awardPoints(ctgy, joker=False):
-    # if the dice match the chosen category, or is joker, then return the correct number of points
+def awardPts(ctgy, joker=False):
     if ctgys[ctgy]["rule"] or joker:
-        print("points to earn", ctgys[ctgy]["pts"])
-        return ctgys[ctgy]["pts"]
+        x = ctgys[ctgy]["pts"]
+        print("you get", x)
     else:
-        return 0
-    # else if the dice do not match the chosen category, return 0 points
+        print("nothing, you get", 0)
 
 
 
 
 
-def scorePoints():
-    ctgy = "2"
-    awardPoints(ctgy)
+def playRound(roll):
+    roll = [1, 2, 3, 4, 4]
+    return roll
 
 
-def playRound(ctgy):
-    scorePoints()
+def scoreCategory():
+    player = "4"
+    print("Normal scoring")
+    print(ctgys[player]["pts"])
+    awardPts(player)
+    print(f"{ctgys[player]['value']} points awarded to {player}")
 
-playerDice = [2, 2, 3, 3, 3]
+
+playerDice = [1, 2, 3, 4, 4]
+playerDice = playRound(playerDice)
 ctgys = {  # ctgys is shorthand for categories
     "1": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(1) * 1},
     "2": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(2) * 2},
@@ -52,12 +57,11 @@ ctgys = {  # ctgys is shorthand for categories
     "6": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(6) * 6},
     "t": {"value": None, "row": "lower", "rule": findKind(3, playerDice), "pts": sum(playerDice)},  # triples / three of a kind
     "q": {"value": None, "row": "lower", "rule": findKind(4, playerDice), "pts": sum(playerDice)},  # quadruples / four of a kind
-    "f": {"value": None, "row": "lower", "rule": findKind(2, playerDice, "==") and findKind(3, playerDice), "pts": 25},
-    # full house
+    "f": {"value": None, "row": "lower", "rule": findKind(2, playerDice, "==") and findKind(3, playerDice), "pts": 25},  # full house
     "s": {"value": None, "row": "lower", "rule": findStraight(4, playerDice), "pts": 30},  # small straight
     "l": {"value": None, "row": "lower", "rule": findStraight(5, playerDice), "pts": 40},  # large straight
     "c": {"value": None, "row": "lower", "rule": True, "pts": sum(playerDice)},  # chance
-    "y": {"value": 50, "row": "lower", "rule": findKind(5, playerDice), "pts": 50},  # how to check this rule?
+    "y": {"value": None, "row": "lower", "rule": findKind(5, playerDice), "pts": 50},  # how to check this rule?
 }
+scoreCategory()
 
-playRound("2")
