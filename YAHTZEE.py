@@ -4,6 +4,7 @@ from random import *
 playerDice = [0, 0, 0, 0, 0]
 # roll = [3, 1, 3, 1, 1]  # example roll
 
+
 def findKind(num, roll, relate=">="):  # finds how many of a number in dice roll
     for i in range(1, 7):
         if relate == ">=" and roll.count(i) >= num:
@@ -37,11 +38,9 @@ def categoryValid(input):
     return False
 
 
-# def scrCtgy(ctgy, roll, rule=None):  # if rule is not set to True, we will assume there is no joker
-
-
 def awardPts(roll, ctgy, joker=False):
     if ctgys[ctgy]["rule"] or joker:
+        print("points to earn", ctgys[ctgy]["pts"])
         return ctgys[ctgy]["pts"]
     else:
         return 0
@@ -101,10 +100,7 @@ def playRound(roll):
 
             else:
                 print("Normal scoring")
-                if ctgys[player]["rule"]:
-                    ctgys[player]["value"] = awardPts(roll, player, True)
-                else:
-                    ctgys[player]["value"] = 0
+                ctgys[player]["value"] = awardPts(roll, player)
                 print(f"{ctgys[player]['value']} points awarded to {player}")
         else:
             print("ctgy err")
