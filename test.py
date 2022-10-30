@@ -61,11 +61,11 @@ ctgys={ # categories shorthand
     "c": {"value": None, "rule": True},
     "y": {"value": None, "rule": True},  # how to check this rule?
 }
-ctgysKeys = list(ctgys.keys())  # converts keys of dictionaries into plan list
-print("t" in ctgysKeys)  # can then check to see if something is in that list
-
-print(ctgys["l"]["rule"])
-
+# ctgysKeys = list(ctgys.keys())  # converts keys of dictionaries into plan list
+# print("t" in ctgysKeys)  # can then check to see if something is in that list
+#
+# print(ctgys["l"]["rule"])
+#
 
 # rollStr = str(set(roll)).strip("{}").replace(", ", "")  # code that converts a list to a set to a string.
 # print(rollStr)
@@ -79,4 +79,4 @@ print(ctgys["l"]["rule"])
 # else:
 #     print("None")
 
-input(">>> ")
+# input(">>> ")
