@@ -112,7 +112,7 @@ def displayScreen(ctgys, roll, rollNum, error="", last_round="---", joker=False,
     line4_display = "  "
     line4_display += "{JOKER}  " if joker else "         "
     line4_display += "{BONUS}" if bonus else "       "
-    print(f"==YAHTZEE=====Scr:{total_score:0>3}")
+    print("==YAHTZEE=====Scr:{:0>3}".format(total_score))
     print(f" {upper_display} ={upper_scores:0>3}  lst:{last_round:0>3}")
     print(f" {lower_display}   bst:{best_ctgy['name'].upper()}:{best_ctgy['value']:0>2}")
     print(line4_display)
