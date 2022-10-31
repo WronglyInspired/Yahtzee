@@ -26,21 +26,16 @@ def findStraight(size, roll):  # finds small (4) or large (5) straights from a r
 
 
 def categoryValid(ctgy, ctgys):
-    print(" we are getting from", ctgys)
-    print(type(ctgys))
     if ctgys.get(ctgy) is not None and ctgys[ctgy]["value"] is None:
         return True
     return False
 
 
 def awardPts(ctgy, ctgys, joker=False):
-    print("awardPts()", ctgys)
     if eval(ctgys[ctgy]["rule"]) or joker:
         x = eval(ctgys[ctgy]["pts"])
-        print("You get", x)
     else:
         x = 0
-        print("Nothing, you get", 0)
     return x
 
 
@@ -71,12 +66,11 @@ def playRound(roll):
         else:
             print("error invalid input")
 
-    return roll
+    return roll, player
 
 
-def scoreCategory(ctgys):
+def scoreCategory(ctgys, player):
     print("scoreCategory()", ctgys)
-    player = None
     while not categoryValid(player, ctgys):
         player = input("Score: ")
         if categoryValid(player, ctgys):
@@ -101,12 +95,12 @@ def scoreCategory(ctgys):
             else:
                 print("Normal scoring")
                 print(ctgys[player]["pts"])
-                ctgys = awardPts(player, ctgys)
-                # print(f"{ctgys[player]['value']} points awarded to {player}")
+                roundPoints = awardPts(player, ctgys)
+                ctgys[player]["value"] = roundPoints
+                print(f"{roundPoints} points awarded to {player}")
+                print(ctgys[player])
         else:
             print("ctgy err")
-    print("returning scoreCategory()", ctgys)
-    print("player", player)
     return ctgys
 
 
@@ -130,8 +124,8 @@ playerCtgys = {  # ctgys is shorthand for categories
 turn = 0
 while turn < 13:
     playerDice = [0, 0, 0, 0, 0]
-    playerDice = playRound(playerDice)
-    print("pCategories before", playerCtgys)
-    playerCtgys = scoreCategory(playerCtgys)
+    playRoundOutput = playRound(playerDice)
+    playerDice = playRoundOutput[0]
+    playerCtgys = scoreCategory(playerCtgys, playRoundOutput[1])
     print("pCategories after", playerCtgys)
     turn += 1
