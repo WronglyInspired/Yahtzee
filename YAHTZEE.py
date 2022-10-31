@@ -84,22 +84,28 @@ def scoreCategory(ctgys, player):
 
     if eval(ctgys["y"]["rule"]) and ctgys["y"]["value"] is not None:  # if the Yahtzee becomes a Joker
         print("Joker Time")
-
         # yahtzee bonus
         if 0 < ctgys["y"]["value"] <= 250:
             ctgys["y"]["value"] += 100
             print("Yahtzee Bonus")
+        while True:
+            # joker (Free choice Joker rule)
+            if ctgys[str(playerDice[0])]["value"] is None:  # if the corresponding upper section box is empty
+                if player == str(playerDice[0]):  # and player has chosen it, alg
 
-        # joker (Free choice Joker rule)
-        if ctgys[str(playerDice[0])]["value"] is None:  # if the corresponding upper section box is empty
-            if player == str(playerDice[0]):  # and player has chosen it, alg
-                print("award points")
-            else:
-                print(
-                    "error--must select corresponding upper section box")  # otherwise throw error (which is nicer than giving them 0)
-        else:  # player can score in any box and rule = True
-            awardPts(player, ctgys, True)
-            print(f"{ctgys[player]['value']} points awarded to {player}")
+                    roundPoints = awardPts(player, ctgys)
+                    ctgys[player]["value"] = roundPoints
+                    print(f"{roundPoints} points awarded to {player}, normal style")
+
+                    break
+                else:
+                    print("error--must select corresponding upper section box")  # otherwise throw error (which is nicer than giving them 0)
+                    player = input("Score joker time: ")
+            else:  # player can score in any box and rule = True (this is the joker)
+                roundPoints = awardPts(player, ctgys, True)
+                ctgys[player]["value"] = roundPoints
+                print(f"{roundPoints} points awarded to {player}, joker style")
+                break
 
     # normal scoring
     else:
@@ -132,9 +138,8 @@ playerCtgys = {  # ctgys is shorthand for categories
 
 turn = 1
 while turn <= 13:
-    playerDice = [0, 0, 0, 0, 0]
-    playRoundOutput = playRound(playerDice)
-    playerDice = playRoundOutput[0]
+    playerDice = [5, 5, 5, 5, 5]
+    playRoundOutput = (playerDice, "y")
     playerCtgys = scoreCategory(playerCtgys, playRoundOutput[1])
     print("pCategories after", playerCtgys)
     turn += 1
