@@ -4,9 +4,6 @@ from random import *
 playerDice = [0, 0, 0, 0, 0]
 
 
-# roll = [3, 1, 3, 1, 1]  # example roll
-
-
 def findKind(num, roll, relate=">="):  # finds how many of a number in dice roll
     for i in range(1, 7):
         if relate == ">=" and roll.count(i) >= num:
@@ -78,7 +75,6 @@ def scoreCategory(ctgys, player):
         print("ctgy error - exists but already filled")
     while not categoryValid(player, ctgys):
         player = input("Score: ")
-        print(categoryValid(player, ctgys))
         if not categoryValid(player, ctgys):
             print("ctgy err")
 
@@ -89,9 +85,9 @@ def scoreCategory(ctgys, player):
             ctgys["y"]["value"] += 100
             print("Yahtzee Bonus")
         while True:
-            # joker (Free choice Joker rule)
+            # Free choice Joker rule
             if ctgys[str(playerDice[0])]["value"] is None:  # if the corresponding upper section box is empty
-                if player == str(playerDice[0]):  # and player has chosen it, alg
+                if player == str(playerDice[0]):  # and player has chosen it, move on and score normally
 
                     roundPoints = awardPts(player, ctgys)
                     ctgys[player]["value"] = roundPoints
@@ -99,9 +95,10 @@ def scoreCategory(ctgys, player):
 
                     break
                 else:
-                    print("error--must select corresponding upper section box")  # otherwise throw error (which is nicer than giving them 0)
+                    print(
+                        "error--must select corresponding upper section box")  # otherwise throw error (which is nicer than giving them 0, as in original rules)
                     player = input("Score joker time: ")
-            else:  # player can score in any box and rule = True (this is the joker)
+            else:  # JOKER
                 roundPoints = awardPts(player, ctgys, True)
                 ctgys[player]["value"] = roundPoints
                 print(f"{roundPoints} points awarded to {player}, joker style")
@@ -136,11 +133,41 @@ playerCtgys = {  # ctgys is shorthand for categories
     "y": {"value": None, "row": "lower", "rule": "findKind(5, playerDice)", "pts": "50"},  # how to check this rule?
 }
 
+print("Welcome to YAHTZEE. See another place for the rules, because you won't get them here.")
 turn = 1
 while turn <= 13:
-    playerDice = [5, 5, 5, 5, 5]
-    playRoundOutput = (playerDice, "y")
-    playerCtgys = scoreCategory(playerCtgys, playRoundOutput[1])
-    print("pCategories after", playerCtgys)
-    turn += 1
     print(f" ---{turn}---")
+    playerDice = [0, 0, 0, 0, 0]
+    playRoundOutput = playRound(playerDice)
+    playerDice = playRoundOutput[0]
+    playerCtgys = scoreCategory(playerCtgys, playRoundOutput[1])
+    print("playerCtgys", playerCtgys)
+    turn += 1
+
+print("End of Game")
+print(playerCtgys.items())
+upper_scores = []
+lower_scores = []
+# upper row
+for key, v in playerCtgys.items():
+    if v["row"] == "upper":
+        upper_scores.append(v["value"])
+# lower row
+for key, v in playerCtgys.items():
+    if v["row"] == "lower":
+        lower_scores.append(v["value"])
+# upper row bonus
+if sum(upper_scores) >= 63:
+    upper_bonus = 35
+else:
+    upper_bonus = 0
+total_score = sum(upper_scores) + sum(lower_scores) + upper_bonus
+
+print(sum(upper_scores))
+print(sum(lower_scores))
+print(upper_bonus)
+
+print(total_score)
+
+
+
