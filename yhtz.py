@@ -85,15 +85,12 @@ def scoreCategory(ctgys, player, roll):
     return ctgys, roundPoints
 def getScores(ctgys):
     upper_scores, lower_scores = [], []
-    # upper row
-    for key, v in ctgys.items():
+    for key, v in ctgys.items():  # upper row
         if v["row"] == "upper":
             upper_scores.append(v["value"]) if v["value"] is not None else upper_scores.append(0)
     upper_scores = sum(upper_scores)
-    # upper row bonus
-    upper_bonus = 35 if upper_scores >= 63 else 0
-    # lower row
-    for key, v in ctgys.items():
+    upper_bonus = 35 if upper_scores >= 63 else 0  # upper row bonus
+    for key, v in ctgys.items():  # lower row
         if v["row"] == "lower":
             lower_scores.append(v["value"]) if v["value"] is not None else lower_scores.append(0)
     lower_scores = sum(lower_scores)
