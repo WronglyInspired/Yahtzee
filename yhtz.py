@@ -113,11 +113,11 @@ def displayScreen(ctgys, roll, rollNum, error="", last_round="---", joker=False,
     line4_display += "{JOKER}  " if joker else "         "
     line4_display += "{BONUS}" if bonus else "       "
     print("==YAHTZEE=====Scr:{:0>3}".format(total_score))
-    print(f" {upper_display} ={upper_scores:0>3}  lst:{last_round:0>3}")
-    print(f" {lower_display}   bst:{best_ctgy['name'].upper()}:{best_ctgy['value']:0>2}")
+    print(" {} ={:0>3}  lst:{:0>3}".format(upper_display, upper_scores, last_round))
+    print(" {}   bst:{}:{:0>2}".format(lower_display, best_ctgy['name'].upper(), best_ctgy['value']))
     print(line4_display)
-    print(f" [{roll[0]}] [{roll[1]}] [{roll[2]}] [{roll[3]}] [{roll[4]}]")
-    print(f" {error:13} roll:{rollNum}")
+    print(" [{}] [{}] [{}] [{}] [{}]".format(roll[0],roll[1],roll[2],roll[3],roll[4]))
+    print(" {:13} roll:{}".format(error,rollNum))
 plyrCtgys = {"1": {"value": None, "row": "upper", "rule": "True", "pts": "plyrDice.count(1) * 1"},"2": {"value": None,
     "row": "upper", "rule": "True", "pts": "plyrDice.count(2) * 2"},"3": {"value": None, "row": "upper", "rule":
     "True", "pts": "plyrDice.count(3) * 3"},"4": {"value": None, "row": "upper", "rule": "True", "pts":
@@ -143,5 +143,6 @@ while turn <= 13:
 player_scores = getScores(plyrCtgys)
 getScores(plyrCtgys)
 a, b, c, d = "Upper row:", "Upper row bonus:", "Lower row:", "TOTAL SCORE:"
-print(f"==YAHTZEE============\nEnd of game.\n{a:17} {player_scores[0]:0>3}\n{b:17} {player_scores[1]:0>3}\n{c:17} "
-      f"{player_scores[2]:0>3}\n{d:15} -{player_scores[3]:0>3}-\nTy! Reload to ply agn")
+print("==YAHTZEE============\nEnd of game.\n{:17} {:0>3}\n{:17} {:0>3}\n{:17} {:0>3}\n{:15} -{:0>3}-\nTy! Reload to ply"
+      " agn".format(a,player_scores[0],b,player_scores[1],c,player_scores[2],d,player_scores[3]))
+
