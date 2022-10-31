@@ -1,5 +1,5 @@
 # Yahtzee by WronglyInspired
-from random import *
+from random import randint
 def findKind(num, roll, relate=">="):  # finds how many of a number in dice roll
     for i in range(1, 7):
         if relate == ">=" and roll.count(i) >= num:
@@ -124,8 +124,8 @@ plyrCtgys = {"1": {"value": None, "row": "upper", "rule": "True", "pts": "plyrDi
     "plyrDice.count(4) * 4"},"5": {"value": None, "row": "upper", "rule": "True", "pts": "plyrDice.count(5) * 5"},
     "6": {"value": None, "row": "upper", "rule": "True", "pts": "plyrDice.count(6) * 6"},"t": {"value": None, "row":
     "lower", "rule": "findKind(3, plyrDice)", "pts": "sum(plyrDice)"},"q": {"value": None, "row": "lower", "rule":
-    "findKind(4, plyrDice)", "pts": "sum(plyrDice)"},"f": {"value": None, "row": "lower", "rule": "findKind(2, play"
-    "erDice, '==') and findKind(3, plyrDice)","pts": "25"},"s": {"value": None, "row": "lower", "rule": "findStraight"
+    "findKind(4, plyrDice)", "pts": "sum(plyrDice)"},"f": {"value": None, "row": "lower", "rule": "findKind(2, ply"
+    "rDice, '==') and findKind(3, plyrDice)","pts": "25"},"s": {"value": None, "row": "lower", "rule": "findStraight"
     "(4, plyrDice)", "pts": "30"},"l": {"value": None, "row": "lower", "rule": "findStraight(5, plyrDice)", "pts":
     "40"},"c": {"value": None, "row": "lower", "rule": "True", "pts": "sum(plyrDice)"},"y": {"value": None, "row":
     "lower", "rule": "findKind(5, plyrDice)", "pts": "50"}}
