@@ -28,7 +28,7 @@ Restrictions: 7 lines of 21 characters
 ---------------------
 ==YAHTZEE=====Scr:104|  # title and total score
  1234^6 =043  lst:034|  # upper row, upper row total, last round's score
- 34FSLC Y   bst:Y:50 |  # lower row, best play
+ TQFSLC Y   bst:Y:50 |  # lower row, best play
   {JOKER}  {BONUS}   |  # Joker if Joker, Yahtzee Bonus if bonus
  [6] [6] [6] [6] [6] |  # dice
  <spcfy err>   roll:1|  # error if any, roll count
