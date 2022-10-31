@@ -60,10 +60,10 @@ def scoreCategory(ctgys, player, roll):
         player = input("Score: ")
         if not categoryValid(player, ctgys):
             error = "<ctgy err>"
-    if eval(ctgys["y"]["rule"]) and ctgys["y"]["value"] is not None:  # if the Yahtzee becomes a Joker
+    if eval(ctgys["Y"]["rule"]) and ctgys["Y"]["value"] is not None:  # if the Yahtzee becomes a Joker
         joker = True
-        if 0 < ctgys["y"]["value"] <= 250:  # yahtzee bonus
-            ctgys["y"]["value"] += 100
+        if 0 < ctgys["Y"]["value"] <= 250:  # yahtzee bonus
+            ctgys["Y"]["value"] += 100
             bonus = True
         while True: # Free choice joker rule
             if ctgys[str(plyrDice[0])]["value"] is None:  # if the corresponding upper section box is empty
@@ -102,13 +102,14 @@ def displayScreen(ctgys, roll, rollNum, error="", last_round="---", joker=False,
     best_ctgy = {"name": "-", "value": "--"}
     # best_ctgy = findBestCtgy(roll)
     upper_display, lower_display = "", ""
-    for count, value in enumerate(ctgys.keys()):
-        if count < 6:
-            upper_display += value.upper() if ctgys[value]["value"] is None else "-"
-        elif count < 12:
-            lower_display += value.upper() if ctgys[value]["value"] is None else "-"
-        elif count < 13:
-            lower_display += " Y" if ctgys[value]["value"] is None else " -"
+    ctgy_keys = list(ctgys.keys())
+    for i in range(0, len(ctgy_keys)):
+        if i < 6:
+            upper_display += ctgy_keys[i].upper() if ctgys[ctgy_keys[i].upper()]["value"] is None else "-"
+        elif i < 12:
+            lower_display += ctgy_keys[i].upper() if ctgys[ctgy_keys[i].upper()]["value"] is None else "-"
+        elif i < 13:
+            lower_display += " Y" if ctgys[ctgy_keys[i].upper()]["value"] is None else " -"
     line4_display = "  "
     line4_display += "{JOKER}  " if joker else "         "
     line4_display += "{BONUS}" if bonus else "       "
@@ -122,12 +123,12 @@ plyrCtgys = {"1": {"value": None, "row": "upper", "rule": "True", "pts": "plyrDi
     "row": "upper", "rule": "True", "pts": "plyrDice.count(2) * 2"},"3": {"value": None, "row": "upper", "rule":
     "True", "pts": "plyrDice.count(3) * 3"},"4": {"value": None, "row": "upper", "rule": "True", "pts":
     "plyrDice.count(4) * 4"},"5": {"value": None, "row": "upper", "rule": "True", "pts": "plyrDice.count(5) * 5"},
-    "6": {"value": None, "row": "upper", "rule": "True", "pts": "plyrDice.count(6) * 6"},"t": {"value": None, "row":
-    "lower", "rule": "findKind(3, plyrDice)", "pts": "sum(plyrDice)"},"q": {"value": None, "row": "lower", "rule":
-    "findKind(4, plyrDice)", "pts": "sum(plyrDice)"},"f": {"value": None, "row": "lower", "rule": "findKind(2, ply"
-    "rDice, '==') and findKind(3, plyrDice)","pts": "25"},"s": {"value": None, "row": "lower", "rule": "findStraight"
-    "(4, plyrDice)", "pts": "30"},"l": {"value": None, "row": "lower", "rule": "findStraight(5, plyrDice)", "pts":
-    "40"},"c": {"value": None, "row": "lower", "rule": "True", "pts": "sum(plyrDice)"},"y": {"value": None, "row":
+    "6": {"value": None, "row": "upper", "rule": "True", "pts": "plyrDice.count(6) * 6"},"T": {"value": None, "row":
+    "lower", "rule": "findKind(3, plyrDice)", "pts": "sum(plyrDice)"},"Q": {"value": None, "row": "lower", "rule":
+    "findKind(4, plyrDice)", "pts": "sum(plyrDice)"},"F": {"value": None, "row": "lower", "rule": "findKind(2, ply"
+    "rDice, '==') and findKind(3, plyrDice)","pts": "25"},"S": {"value": None, "row": "lower", "rule": "findStraight"
+    "(4, plyrDice)", "pts": "30"},"L": {"value": None, "row": "lower", "rule": "findStraight(5, plyrDice)", "pts":
+    "40"},"C": {"value": None, "row": "lower", "rule": "True", "pts": "sum(plyrDice)"},"Y": {"value": None, "row":
     "lower", "rule": "findKind(5, plyrDice)", "pts": "50"}}
 print("==YAHTZEE============\nWelcome to Yahtzee. \nOfficial rules apply.\nSee rls & instrctns\nFor more help.\n")
 input("Entr to bgn: ")
