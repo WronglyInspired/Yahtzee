@@ -25,14 +25,9 @@ def findStraight(size, roll):  # finds small (4) or large (5) straights from a r
         return False
 
 
-# def categoryValid(input):
-#     ctgysKeys = list(ctgys.keys())  # converts keys of dictionaries into plan list
-#     if input in ctgysKeys:  # can then check to see if something is in that list
-#         if ctgys[input]["value"] is None:
-#             return True
-#     return False
-
 def categoryValid(ctgy, ctgys):
+    print(" we are getting from", ctgys)
+    print(type(ctgys))
     if ctgys.get(ctgy) is not None and ctgys[ctgy]["value"] is None:
         return True
     return False
@@ -40,11 +35,13 @@ def categoryValid(ctgy, ctgys):
 
 def awardPts(ctgy, ctgys, joker=False):
     print("awardPts()", ctgys)
-    if ctgys[ctgy]["rule"] or joker:
-        x = ctgys[ctgy]["pts"]
-        print("you get", x)
+    if eval(ctgys[ctgy]["rule"]) or joker:
+        x = eval(ctgys[ctgy]["pts"])
+        print("You get", x)
     else:
-        print("nothing, you get", 0)
+        x = 0
+        print("Nothing, you get", 0)
+    return x
 
 
 def rollDice(roll, hold):
@@ -64,7 +61,7 @@ def playRound(roll):
     rollNum = 1
 
     while 1 <= rollNum <= 2:
-        player = input("Hold & Reroll OR Score")
+        player = input("Hold & Reroll OR Score ")
         if len(player) == 1:  # if to score
             rollNum = 3
         elif len(player) == 5:  # if to hold
@@ -83,7 +80,7 @@ def scoreCategory(ctgys):
     while not categoryValid(player, ctgys):
         player = input("Score: ")
         if categoryValid(player, ctgys):
-            if ctgys["y"]["rule"] and ctgys["y"]["value"] is not None:  # if the Yahtzee becomes a Joker
+            if eval(ctgys["y"]["rule"]) and ctgys["y"]["value"] is not None:  # if the Yahtzee becomes a Joker
                 print("Joker Time")
 
                 # yahtzee bonus
@@ -104,32 +101,32 @@ def scoreCategory(ctgys):
             else:
                 print("Normal scoring")
                 print(ctgys[player]["pts"])
-                awardPts(player, ctgys)
-                print(f"{ctgys[player]['value']} points awarded to {player}")
+                ctgys = awardPts(player, ctgys)
+                # print(f"{ctgys[player]['value']} points awarded to {player}")
         else:
             print("ctgy err")
     print("returning scoreCategory()", ctgys)
+    print("player", player)
     return ctgys
 
 
 playerCtgys = {  # ctgys is shorthand for categories
-    "1": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(1) * 1},
-    "2": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(2) * 2},
-    "3": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(3) * 3},
-    "4": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(4) * 4},
-    "5": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(5) * 5},
-    "6": {"value": None, "row": "upper", "rule": True, "pts": playerDice.count(6) * 6},
-    "t": {"value": None, "row": "lower", "rule": findKind(3, playerDice), "pts": sum(playerDice)},  # triples / three of a kind
-    "q": {"value": None, "row": "lower", "rule": findKind(4, playerDice), "pts": sum(playerDice)},  # quadruples / four of a kind
-    "f": {"value": None, "row": "lower", "rule": findKind(2, playerDice, "==") and findKind(3, playerDice), "pts": 25},
+    "1": {"value": None, "row": "upper", "rule": "True", "pts": "playerDice.count(1) * 1"},
+    "2": {"value": None, "row": "upper", "rule": "True", "pts": "playerDice.count(2) * 2"},
+    "3": {"value": None, "row": "upper", "rule": "True", "pts": "playerDice.count(3) * 3"},
+    "4": {"value": None, "row": "upper", "rule": "True", "pts": "playerDice.count(4) * 4"},
+    "5": {"value": None, "row": "upper", "rule": "True", "pts": "playerDice.count(5) * 5"},
+    "6": {"value": None, "row": "upper", "rule": "True", "pts": "playerDice.count(6) * 6"},
+    "t": {"value": None, "row": "lower", "rule": "findKind(3, playerDice)", "pts": "sum(playerDice)"},  # triples / three of a kind
+    "q": {"value": None, "row": "lower", "rule": "findKind(4, playerDice)", "pts": "sum(playerDice)"},  # quadruples / four of a kind
+    "f": {"value": None, "row": "lower", "rule": "findKind(2, playerDice, '==') and findKind(3, playerDice)", "pts": "25"},
     # full house
-    "s": {"value": None, "row": "lower", "rule": findStraight(4, playerDice), "pts": 30},  # small straight
-    "l": {"value": None, "row": "lower", "rule": findStraight(5, playerDice), "pts": 40},  # large straight
-    "c": {"value": None, "row": "lower", "rule": True, "pts": sum(playerDice)},  # chance
-    "y": {"value": 50, "row": "lower", "rule": findKind(5, playerDice), "pts": 50},  # how to check this rule?
+    "s": {"value": None, "row": "lower", "rule": "findStraight(4, playerDice)", "pts": "30"},  # small straight
+    "l": {"value": None, "row": "lower", "rule": "findStraight(5, playerDice)", "pts": "40"},  # large straight
+    "c": {"value": None, "row": "lower", "rule": "True", "pts": "sum(playerDice)"},  # chance
+    "y": {"value": 50, "row": "lower", "rule": "findKind(5, playerDice)", "pts": "50"},  # how to check this rule?
 }
 
-# !!the problem is that the pts part of ctgys is evaluating straight away, until waiting until dice has been rolled for evaluating
 turn = 0
 while turn < 13:
     playerDice = [0, 0, 0, 0, 0]

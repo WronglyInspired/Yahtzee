@@ -81,12 +81,18 @@ ctgys={ # categories shorthand
 
 # input(">>> ")
 
-def iman():
-    i = 0
-    while i < 3:
-        print(i)
-        i += 1
-    print("end")
+# def iman():
+#     i = 0
+#     while i < 3:
+#         print(i)
+#         i += 1
+#     print("end")
+#
+# iman()
+# print("finish")
 
-iman()
-print("finish")
+# playerDice = [6, 6, 2, 1, 3]
+# x = "playerDice.count(6) * 6"
+# print(eval(x))
+x = 50
+print(eval("50"))
