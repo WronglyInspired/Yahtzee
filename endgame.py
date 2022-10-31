@@ -1,3 +1,25 @@
+def getScores(ctgys):
+    upper_scores = []
+    lower_scores = []
+    # upper row
+    for key, v in playerCtgys.items():
+        if v["row"] == "upper":
+            upper_scores.append(v["value"])
+    upper_scores = sum(upper_scores)
+    # upper row bonus
+    if upper_scores >= 63:
+        upper_bonus = 35
+    else:
+        upper_bonus = 0
+    # lower row
+    for key, v in playerCtgys.items():
+        if v["row"] == "lower":
+            lower_scores.append(v["value"])
+    lower_scores = sum(lower_scores)
+    total_score = upper_scores + upper_bonus + lower_scores
+    return upper_scores, upper_bonus, lower_scores, total_score
+
+
 playerCtgys = {  # ctgys is shorthand for categories
     "1": {"value": 4, "row": "upper", "rule": "True", "pts": "playerDice.count(1) * 1"},
     "2": {"value": 8, "row": "upper", "rule": "True", "pts": "playerDice.count(2) * 2"},
@@ -17,26 +39,6 @@ playerCtgys = {  # ctgys is shorthand for categories
     "c": {"value": 26, "row": "lower", "rule": "True", "pts": "sum(playerDice)"},  # chance
     "y": {"value": 0, "row": "lower", "rule": "findKind(5, playerDice)", "pts": "50"},  # how to check this rule?
 }
-print(playerCtgys.items())
-upper_scores = []
-lower_scores = []
-# upper row
-for key, v in playerCtgys.items():
-    if v["row"] == "upper":
-        upper_scores.append(v["value"])
-# lower row
-for key, v in playerCtgys.items():
-    if v["row"] == "lower":
-        lower_scores.append(v["value"])
-# upper row bonus
-if sum(upper_scores) >= 63:
-    upper_bonus = 35
-else:
-    upper_bonus = 0
-total_score = sum(upper_scores) + sum(lower_scores) + upper_bonus
 
-print(sum(upper_scores))
-print(sum(lower_scores))
-print(upper_bonus)
-
-print(total_score)
+player_scores = getScores(playerCtgys)
+print(player_scores)
