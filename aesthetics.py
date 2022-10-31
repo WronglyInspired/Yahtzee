@@ -91,7 +91,7 @@ playerCtgys = {  # ctgys is shorthand for categories
 rollNum = 1
 error = "             "
 # error = "<ctgy err>"
-displayScreen(playerCtgys, playerDice, rollNum, error=error, last_round="---", joker=False, bonus=False)
+displayScreen(playerCtgys, playerDice, rollNum, error, last_round, joker, bonus)
 input("Hld or Scr: ")
 
 

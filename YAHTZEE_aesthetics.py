@@ -49,15 +49,20 @@ def rollDice(roll, hold):
     return roll
 
 
-def playRound(roll):
+def playRound(ctgys, roll, last_round):
+    rollNum = 0
+    error = ""
+    joker = False
+    bonus = False
     # initial roll
-    input("Enter to Roll new round: ")
+    displayScreen(ctgys, roll, rollNum, error, last_round, joker, bonus)
+    input("New rnd: ")
     roll = rollDice(roll, "00000")
-    print(roll)
     rollNum = 1
 
     while 1 <= rollNum <= 2:
-        player = input("Hold & Reroll OR Score ")
+        displayScreen(ctgys, roll, rollNum, error, last_round, joker, bonus)
+        player = input("Hld or Scr: ")
         if len(player) == 1:  # if to score
             rollNum = 3
         elif len(player) == 5:  # if to hold
@@ -65,25 +70,33 @@ def playRound(roll):
             print(roll)
             rollNum += 1
         else:
-            print("error invalid input")
+            error = "<input err>"
 
     return roll, player
 
 
-def scoreCategory(ctgys, player):
+def scoreCategory(ctgys, player, roll):
+    rollNum = 3
+    error = ""
+    last_round = "---"
+    joker = False
+    bonus = False
     if categoryValid(player, ctgys, True) and not categoryValid(player, ctgys):
-        print("ctgy error - exists but already filled")
+        error = "<ctgy err>"
     while not categoryValid(player, ctgys):
+
+        displayScreen(ctgys, roll, rollNum, error, last_round, joker, bonus)
         player = input("Score: ")
+
         if not categoryValid(player, ctgys):
-            print("ctgy err")
+            error = "<ctgy err>"
 
     if eval(ctgys["y"]["rule"]) and ctgys["y"]["value"] is not None:  # if the Yahtzee becomes a Joker
-        print("Joker Time")
+        joker = True
         # yahtzee bonus
         if 0 < ctgys["y"]["value"] <= 250:
             ctgys["y"]["value"] += 100
-            print("Yahtzee Bonus")
+            bonus = True
         while True:
             # Free choice Joker rule
             if ctgys[str(playerDice[0])]["value"] is None:  # if the corresponding upper section box is empty
@@ -91,26 +104,24 @@ def scoreCategory(ctgys, player):
 
                     roundPoints = awardPts(player, ctgys)
                     ctgys[player]["value"] = roundPoints
-                    print(f"{roundPoints} points awarded to {player}, normal style")
+                    last_round = roundPoints
 
                     break
                 else:
-                    print(
-                        "error--must select corresponding upper section box")  # otherwise throw error (which is nicer than giving them 0, as in original rules)
+                    error = "<joker err>"  # otherwise throw error (which is nicer than giving them 0, as in original rules)
+                    displayScreen(ctgys, roll, rollNum, error, last_round, joker, bonus)
                     player = input("Score joker time: ")
             else:  # JOKER
                 roundPoints = awardPts(player, ctgys, True)
                 ctgys[player]["value"] = roundPoints
-                print(f"{roundPoints} points awarded to {player}, joker style")
                 break
 
     # normal scoring
     else:
         roundPoints = awardPts(player, ctgys)
         ctgys[player]["value"] = roundPoints
-        print(f"{roundPoints} points awarded to {player}")
 
-    return ctgys
+    return ctgys, roundPoints
 
 
 # return upper_scores, upper_bonus, lower_scores, total_score
@@ -147,7 +158,7 @@ def displayScreen(ctgys, roll, rollNum, error="", last_round="---", joker=False,
     scores = getScores(ctgys)
     upper_scores = scores[0]
     total_score = scores[3]
-    best_ctgy = {"name": "n", "value": "--"}
+    best_ctgy = {"name": "-", "value": "--"}
     # best_ctgy = findBestCtgy(roll)
     upper_display = ""
     lower_display = ""
@@ -189,15 +200,17 @@ playerCtgys = {  # ctgys is shorthand for categories
     "y": {"value": None, "row": "lower", "rule": "findKind(5, playerDice)", "pts": "50"},  # how to check this rule?
 }
 
-print("Welcome to YAHTZEE. See another place for the rules, because you won't get them here.")
+print("==YAHTZEE============\nWelcome to Yahtzee. \nOfficial rules apply.\nSee rls & instrctns\nFor more help.\n")
+input("Entr to bgn: ")
 turn = 1
+last_round = "---"
 while turn <= 13:
-    print(f" ---{turn}---")
     playerDice = [0, 0, 0, 0, 0]
-    playRoundOutput = playRound(playerDice)
+    playRoundOutput = playRound(playerCtgys, playerDice, last_round)
     playerDice = playRoundOutput[0]
-    playerCtgys = scoreCategory(playerCtgys, playRoundOutput[1])
-    print("playerCtgys", playerCtgys)
+    scoreCategoryOutput = scoreCategory(playerCtgys, playRoundOutput[1], playerDice)
+    playerCtgys = scoreCategoryOutput[0]
+    last_round = scoreCategoryOutput[1]
     turn += 1
 
 print("End of Game")
