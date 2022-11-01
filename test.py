@@ -49,7 +49,7 @@
 ctgys={ # categories shorthand
     "1": {"value": None, "rule": True},
     "2": {"value": None, "rule": True},
-    "3": {"value": None, "rule": True},
+    "3": {"value": 3, "rule": True},
     "4": {"value": None, "rule": True},
     "5": {"value": None, "rule": True},
     "6": {"value": None, "rule": True},
@@ -97,4 +97,16 @@ ctgys={ # categories shorthand
 # x = 50
 # print(eval("50"))
 
-print(list(ctgys.keys()))
+# x = "123456"
+# x[0] = "-"
+# # for i in x:
+# #     if ctgys[i]["value"] is not None:
+# #         x[i] = "-"
+
+x = "123456"
+for i in ctgys.keys():
+    x += i
+
+print(x)
+x = x[6:]
+print(x)

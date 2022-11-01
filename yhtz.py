@@ -42,7 +42,7 @@ def playRound(ctgys, roll, last_round):
     roll, rollNum = rollDice(roll, "00000"), 1
     while 1 <= rollNum <= 2:
         displayScreen(ctgys, roll, rollNum, error, last_round, joker, bonus)
-        player = input("Hld or Scr: ")
+        player = input("Hld or Scr: ").upper()
         if len(player) == 1:  # if to score
             rollNum = 3
         elif len(player) == 5:  # if to hold
@@ -57,7 +57,7 @@ def scoreCategory(ctgys, player, roll):
         error = "<ctgy err>"
     while not categoryValid(player, ctgys):
         displayScreen(ctgys, roll, rollNum, error, last_round, joker, bonus)
-        player = input("Score: ")
+        player = input("Score: ").upper()
         if not categoryValid(player, ctgys):
             error = "<ctgy err>"
     if eval(ctgys["Y"]["rule"]) and ctgys["Y"]["value"] is not None:  # if the Yahtzee becomes a Joker
@@ -74,7 +74,7 @@ def scoreCategory(ctgys, player, roll):
                 else:
                     error = "<joker err>"  # otherwise throw error
                     displayScreen(ctgys, roll, rollNum, error, last_round, joker, bonus)
-                    player = input("Scr: ")
+                    player = input("Scr: ").upper()
             else:  # JOKER
                 roundPoints = awardPts(player, ctgys, True)
                 ctgys[player]["value"] = roundPoints
@@ -101,15 +101,12 @@ def displayScreen(ctgys, roll, rollNum, error="", last_round="---", joker=False,
     upper_scores, total_score = scores[0], scores[3]
     best_ctgy = {"name": "-", "value": "--"}
     # best_ctgy = findBestCtgy(roll)
-    upper_display, lower_display = "", ""
-    ctgy_keys = list(ctgys.keys())
-    for i in range(0, len(ctgy_keys)):
-        if i < 6:
-            upper_display += ctgy_keys[i].upper() if ctgys[ctgy_keys[i].upper()]["value"] is None else "-"
-        elif i < 12:
-            lower_display += ctgy_keys[i].upper() if ctgys[ctgy_keys[i].upper()]["value"] is None else "-"
-        elif i < 13:
-            lower_display += " Y" if ctgys[ctgy_keys[i].upper()]["value"] is None else " -"
+    upper_display, lower_display = "123456", "TQFSLCY"
+    for i in upper_display:
+        upper_display += i.upper() if ctgys[i.upper()]["value"] is None else "-"
+    for i in lower_display:
+        lower_display += i.upper() if ctgys[i.upper()]["value"] is None else "-"
+    upper_display, lower_display = upper_display[6:], lower_display[7:]
     line4_display = "  "
     line4_display += "{JOKER}  " if joker else "         "
     line4_display += "{BONUS}" if bonus else "       "
@@ -144,6 +141,7 @@ while turn <= 13:
 player_scores = getScores(plyrCtgys)
 getScores(plyrCtgys)
 a, b, c, d = "Upper row:", "Upper row bonus:", "Lower row:", "TOTAL SCORE:"
-print("==YAHTZEE============\nEnd of game.\n{:17} {:0>3}\n{:17} {:0>3}\n{:17} {:0>3}\n{:15} -{:0>3}-\nTy! Reload to ply"
-      " agn".format(a,player_scores[0],b,player_scores[1],c,player_scores[2],d,player_scores[3]))
+print("==YAHTZEE============\nEnd of game.\n{:17} {:0>3}\n{:17} {:0>3}\n{:17} {:0>3}\n{:15} -{:0>3}-\n"
+      .format(a,player_scores[0],b,player_scores[1],c,player_scores[2],d,player_scores[3]))
+input("Ty! Reld to ply agn.")
 
