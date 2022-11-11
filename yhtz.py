@@ -1,4 +1,4 @@
-# Yahtzee for Casio fx-9860GIII by WronglyInspired.
+# Yahtzee for Casio fx-9860GIII by WronglyInspired. Runs on Python 3+, and MicroPython 1.9.4
 from random import randint
 def findKind(num, roll, relate=">="):  # finds how many of a number in dice roll
     for i in range(1, 7):
@@ -146,4 +146,3 @@ a, b, c, d = "Upper row:", "Upper row bonus:", "Lower row:", "TOTAL SCORE:"
 print("==YAHTZEE=======End==\n{:17} {:0>3}\n{:17} {:0>3}\n{:17} {:0>3}\n{:15} -{:0>3}-\n"
       .format(a,player_scores[0],b,player_scores[1],c,player_scores[2],d,player_scores[3]))
 input("Ty! Rload to ply agn")
-

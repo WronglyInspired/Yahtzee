@@ -1,0 +1,151 @@
+This folder is full of components and versions of my Yahtzee game, but the final game is called "yhtz.py"
+
+My aim with this project was to re-create Electronic Yahtzee from scratch
+to play on my Casio fx-9860GIII graphics calculator during maths class.
+
+DEFINITELY READ WHERE THERE ARE '!' down the side!
+
+======================================================================================================================
+
+THE FINAL GAME FILE: yhtz.py =========================================================================================
+
+TESTED & WORKS ON: ===================================================================================================
+     - any PC that can run Python 1.9.4+
+     - Casio fx-9860GIII graphics calculator
+
+HOW TO PLAY YAHTZEE: =================================================================================================
+     - look up the official rules online, basically 13 rounds where you roll dice and select best
+       categories to score in and try to get highest points you can.
+     - this game uses the Free Joker rule
+
+!    SLIGHTLY DIFFERENT CATEGORIES:
+
+     Upper Row:
+     1 - Ones
+     2 - Twos
+     3 - Threes
+     4 - Fours
+     5 - Fives
+     6 - Sixes
+
+     Lower Row:
+!    T - Triples (Three of a Kind)
+!    Q - Quadruples (Four of a Kind)
+     F - Full House (Three of one kind and Two of another)
+     S - Small Straight (a run of 4 consecutive dice)
+     L - Large Straight (a run of 5 consecutive dice)
+     C - Chance
+     Y - Yahtzee (all dice same)
+
+HOW TO PLAY MY PYTHON VERSION: =======================================================================================
+
+    UNDERSTANDING THE INTERFACE: -------------------------------------------------------------------------------------
+
+    The interface will look like this when you start the game:
+
+    1    ==YAHTZEE=====Scr:000   # title, total score
+    2     123456 =000  lst:---   # upper row, upper row total, last round's score
+    3     TQFSLCY   bst:-:00     # lower row, best play)
+    4                            #
+    5     [0] [0] [0] [0] [0]    # dice
+    6                   roll:0   # roll count
+    7    New rnd:                # input line
+
+    The interface part-way through a game will generally look like this:
+
+    1    ==YAHTZEE=====Scr:117  # title and total score
+    2     123--6 =022  lst:025  # upper row (with Fours and Fives already filled in), upper row total, last round's score
+    3     TQ-SLCY   bst:C:16    # lower row (with Full House already filled in), best play
+    4                           #
+    5     [4] [1] [1] [4] [6]   # dice
+    6                   roll:1  # roll count
+    7    Hld or Scr:            # input line
+
+    Sometimes you may get an error, meaning your input is invalid in some way and
+    will appear on the 6th line:
+
+    6     <ctgy err>   roll:1  # error message, roll count
+    7    Hld or Scr:            # input line
+
+    And if you roll a yahtzee but have already scored a yahtzee, you may get a bonus,
+    and the joker may be activated:
+
+    1    ==YAHTZEE=====Scr:070  # title and total score
+    2     1234-6 =000  lst:050  # upper row, upper row total, last round's score
+    3     TQFSLC-   bst:Q:25    # lower row, best play
+    4      {JOKER}  {BONUS}     # Joker, Yahtzee Bonus
+    5     [5] [5] [5] [5] [5]   # dice
+    6                   roll:3  # roll count
+    7    Score:            # input line
+
+
+    ENTERING INPUT: --------------------------------------------------------------------------------------------------
+!    - Once game has started, you will be prompted to "Entr to bgn: ", so press [EXE]
+!    - When prompted "New rnd: ", press [EXE] to roll the dice
+!    - When prompted to "Hld or Scr: "
+!
+!      - Option 1: HOLD DICE, which means typing in 5 characters, either '1' or '0'.
+!        For every '0', the corresponding die will be re-rolled.
+!        For example: if dice are [2] [4] [6] [5] [3], and you enter "10110", the 2nd
+!        [4] and 5th [3] dice will be re-rolled but the 1st [2], 3rd [6], and 4th [5]
+!        dice will stay the same (be held). You can HOLD DICE after your first and second roll.
+!
+!      - Option 2: SCORE, which means you have to select a category to score in.
+!        To do this, simply enter the corresponding character for the category you want
+!        to score in, seen on-screen.
+!        For example, to score in Twos enter "2", and to score in Small Straight enter "s".
+!        (Note: Entering letters can be done by pressing [ALPHA])
+!
+!    - When prompted to "Score: ", you must SCORE (see Option 2 above)
+
+     ERROR MESSAGES: -------------------------------------------------------------------------------------------------
+
+     <ctgy err> means you have either selected a category that doesn't exist, or is already filled.
+     You will have to select another category.
+
+     <input err> means you have entered input that is invalid. If you are prompted to "Hld or Scr",
+     make sure you have entered 5 characters of "1" and "0" if holding, or just 1 character
+     if scoring.
+
+     <joker err> means you are not following the correct rules for the joker. These rules follow
+     the Free Joker rule.
+
+
+HOW TO INSTALL on CALCULATOR: ========================================================================================
+     1) Download yhtz.py onto your PC
+     2) Connect calculator to computer using USB Mini-B cable
+     (Next steps have tutorials online to assist with this, may differ form calculator to calculator)
+     3) Select F1-USB Flash on calculator to allow file transfer
+     4) Drag and drop yhtz.py from your PC's file explorer into the main D: disk location
+     5) Wait till calculator has finished downloading, disconnect, and press exit when prompted
+
+HOW TO RUN ON CALCULATOR: ============================================================================================
+     1) Turn on calculator
+     2) Press [Menu] button
+     3) Select PYTHON and press [EXE]  OR  Press [S<->D](H) button
+     4) Select yhtz.py, and press [F1](Run)
+
+MAKING THE GAME: =====================================================================================================
+
+Electronic Yahtzee is a handheld version of the game, and I wanted to adapt that for playing on a calculator, so I made
+this program from scratch. You can see the Electronic Yahtzee interface reflected in my program, but I have made some
+changes.
+
+Some restrictions were that the program could only be 150 lines long and 127 characters wide to function on my
+calculator. When printing to the console, I could only print 6 lines of 21 characters, and the 7th line had to be input.
+
+I also could only represent each category with a short string. At first I opted to specify '+' for upper row categories
+and '-' for lower row, so Threes would be '+3' and Three of a Kind '-3', but that would be too confusing for the user.
+Instead I changed the Three of a Kind and Four of a Kind categories to Triples and Quadruples respectively, so I could
+represent them with unique codes 'T' and 'Q'.
+
+I first coded this to work for Python 3.10+ on my computer, but when I tried to play it on my calculator it threw all
+kinds of errors. I found out my calculator was running an adapted MicroPython 1.9.4, which didn't support formatted strings,
+enumerating or ordered dictionaries to name a few, which gave me a few headaches but I finally sorted out.
+
+Yes my Computer Science teacher would have a fit seeing my PEP-8 violations but it had to be optimised ok
+
+I stretched this project over a long time period but am happy to finally say it is completely finished :)
+
+
+
