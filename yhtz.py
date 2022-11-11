@@ -99,8 +99,10 @@ def getScores(ctgys):
 def displayScreen(ctgys, roll, rollNum, error="", last_round="---", joker=False, bonus=False):  # roll, rollNum):
     scores = getScores(ctgys)
     upper_scores, total_score = scores[0], scores[3]
-    best_ctgy = {"name": "-", "value": "--"}
-    # best_ctgy = findBestCtgy(roll)
+    best_ctgy = {"name": "-", "value": 0}
+    for x in "123456QTFSLCY":
+        if awardPts(x, ctgys) > best_ctgy["value"] and categoryValid(x, ctgys):
+            best_ctgy["name"], best_ctgy["value"] = x, awardPts(x, ctgys)
     upper_display, lower_display = "123456", "TQFSLCY"
     for i in upper_display:
         upper_display += i.upper() if ctgys[i.upper()]["value"] is None else "-"
@@ -141,7 +143,7 @@ while turn <= 13:
 player_scores = getScores(plyrCtgys)
 getScores(plyrCtgys)
 a, b, c, d = "Upper row:", "Upper row bonus:", "Lower row:", "TOTAL SCORE:"
-print("==YAHTZEE============\nEnd of game.\n{:17} {:0>3}\n{:17} {:0>3}\n{:17} {:0>3}\n{:15} -{:0>3}-\n"
+print("==YAHTZEE=======End==\n{:17} {:0>3}\n{:17} {:0>3}\n{:17} {:0>3}\n{:15} -{:0>3}-\n"
       .format(a,player_scores[0],b,player_scores[1],c,player_scores[2],d,player_scores[3]))
-input("Ty! Reld to ply agn.")
+input("Ty! Rload to ply agn")
 
