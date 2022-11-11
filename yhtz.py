@@ -1,4 +1,4 @@
-# Yahtzee by WronglyInspired
+# Yahtzee for Casio fx-9860GIII by WronglyInspired.
 from random import randint
 def findKind(num, roll, relate=">="):  # finds how many of a number in dice roll
     for i in range(1, 7):
@@ -8,7 +8,7 @@ def findKind(num, roll, relate=">="):  # finds how many of a number in dice roll
             return True
     return False
 def findStraight(size, roll):  # finds small (4) or large (5) straights from a roll
-    rollStr = str(set(roll)).strip("{}").replace(", ", "")  # code that converts a list to a set to a string.
+    rollStr = str(sorted(set(roll))).strip("{}").replace(", ", "")  # code that converts a list to a set to a string.
     if size == 4:
         return "1234" in rollStr or "2345" in rollStr or "3456" in rollStr
     elif size == 5:
@@ -129,7 +129,7 @@ plyrCtgys = {"1": {"value": None, "row": "upper", "rule": "True", "pts": "plyrDi
     "(4, plyrDice)", "pts": "30"},"L": {"value": None, "row": "lower", "rule": "findStraight(5, plyrDice)", "pts":
     "40"},"C": {"value": None, "row": "lower", "rule": "True", "pts": "sum(plyrDice)"},"Y": {"value": None, "row":
     "lower", "rule": "findKind(5, plyrDice)", "pts": "50"}}
-print("==YAHTZEE============\nWelcome to Yahtzee. \nOfficial rules apply.\nSee rls & instrctns\nFor more help.\n")
+print("==YAHTZEE============\nWelcome to Yahtzee. \nOfficial rules apply.\nSee README\nFor more help.\n")
 input("Entr to bgn: ")
 turn, last_round = 1, "---"
 while turn <= 13:
